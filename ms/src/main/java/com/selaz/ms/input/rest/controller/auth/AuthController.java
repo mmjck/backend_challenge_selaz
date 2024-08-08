@@ -3,7 +3,7 @@ package com.selaz.ms.input.rest.controller.auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.selaz.ms.infra.config.TokenService;
+import com.selaz.ms.infra.config.security.TokenService;
 import com.selaz.ms.input.rest.controller.auth.dto.AuthRequestDTO;
 import com.selaz.ms.input.rest.controller.auth.dto.AuthResponseDTO;
 import com.selaz.ms.service.user.UserService;
