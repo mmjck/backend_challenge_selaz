@@ -17,10 +17,13 @@ import com.selaz.ms.repository.user.jpa.mapper.UserJpaModel2UserMapper;
 
 @Repository
 public class UserJpaGateway implements UserGateway {
-    private UserJpaRepository repository;
-    private TaskJpaRepository taskJpaRepository;
+    private final UserJpaRepository repository;
+    private final TaskJpaRepository taskJpaRepository;
 
-    public UserJpaGateway(UserJpaRepository repository, TaskJpaRepository taskJpaRepository) {
+    public UserJpaGateway(
+            UserJpaRepository repository, 
+            TaskJpaRepository taskJpaRepository
+    ) {
         this.repository = repository;
         this.taskJpaRepository = taskJpaRepository;
     }
@@ -28,13 +31,10 @@ public class UserJpaGateway implements UserGateway {
     @Override
     public User save(User user) {
         var finded = this.repository.findByUsername(user.getUsername());
-
         if(finded.isPresent()){
             throw new UserAlreadyExistsException();
         }
 
-
-        System.out.println("WASS CALLED");
         var entity = User2UserJpaModelMapper.mapper(user);
 
         var response = this.repository.save(entity);
