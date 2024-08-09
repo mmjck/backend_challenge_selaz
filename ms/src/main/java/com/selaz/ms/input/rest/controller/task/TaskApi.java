@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Task", description = "task endpoints")
@@ -43,7 +44,7 @@ public interface TaskApi {
     @ApiResponse(responseCode = "200", description = "All tasks with filter applied listed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ListTaskResponseDTO.class)))
     @Operation(summary = "Get all tasks and filter it")
     public ResponseEntity<ListTaskResponseDTO> listAll(
-                        @PathVariable("id") Long id,
+                        @Parameter(hidden = true) PrincipalMethodArgumentResolver principal,
                         @RequestParam(name = "status", required = false) Status status,
                         @RequestParam(name = "sort", required = false) String sort);
 

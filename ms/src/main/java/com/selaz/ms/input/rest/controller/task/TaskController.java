@@ -73,13 +73,16 @@ public class TaskController implements TaskApi {
                 return ResponseEntity.ok().build();
         }
 
-        @GetMapping("{userId}")
+        @GetMapping
         @Override
         public ResponseEntity<ListTaskResponseDTO> listAll(
-                        @PathVariable("userId") Long userId,
+                        @Parameter(hidden = true) PrincipalMethodArgumentResolver principal,
                         @RequestParam(name = "status", required = false) Status status,
                         @RequestParam(name = "sort", required = false) String sort) {
 
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                User user = (User) authentication.getPrincipal();
+                Long userId = user.getId();
                 var tasks = this.service.getAllTaskByUserId(userId, status, sort != null && sort.equals("dueDate"));
                 var taskDtoMapped = tasks.stream()
                                 .map(u -> new TaskResponseDTO(u.getId(), u.getTitle(), u.getDescription(),
