@@ -38,7 +38,6 @@ public class TaskController implements TaskApi {
 
         @PostMapping
         @Override
-
         public ResponseEntity<TaskResponseDTO> create(
                         @RequestBody CreateTaskRequestDTO request,
                         @Parameter(hidden = true) PrincipalMethodArgumentResolver principal) {
@@ -74,14 +73,14 @@ public class TaskController implements TaskApi {
                 return ResponseEntity.ok().build();
         }
 
-        @GetMapping("{id}")
+        @GetMapping("{userId}")
         @Override
         public ResponseEntity<ListTaskResponseDTO> listAll(
-                        @PathVariable("id") Long id,
+                        @PathVariable("userId") Long userId,
                         @RequestParam(name = "status", required = false) Status status,
                         @RequestParam(name = "sort", required = false) String sort) {
 
-                var tasks = this.service.getAllTaskByUserId(id, status, sort != null && sort.equals("dueDate"));
+                var tasks = this.service.getAllTaskByUserId(userId, status, sort != null && sort.equals("dueDate"));
                 var taskDtoMapped = tasks.stream()
                                 .map(u -> new TaskResponseDTO(u.getId(), u.getTitle(), u.getDescription(),
                                                 u.getStatus(),
