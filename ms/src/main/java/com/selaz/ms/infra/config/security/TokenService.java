@@ -27,13 +27,13 @@ public class TokenService {
 
             String token = JWT.create()
                     .withIssuer(SERVICE_NAME)
-                    .withSubject(user.getUsername())
                     .withExpiresAt(this.generateExpirationDate())
+                    .withSubject(user.getUsername())
                     .sign(algorithm);
 
             return token;
         } catch (JWTCreationException e) {
-            throw new RuntimeException("Error while aithentication");
+            throw new RuntimeException("Error while authentication");
         }
     }
 

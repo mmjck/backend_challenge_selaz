@@ -11,9 +11,8 @@ import com.selaz.ms.core.domain.user.gateway.UserGateway;
 import com.selaz.ms.service.user.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
-
-    private UserGateway gateway;
+public class UserServiceImpl implements UserService {
+    private final UserGateway gateway;
 
     public UserServiceImpl(UserGateway gateway) {
         this.gateway = gateway;
@@ -22,7 +21,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public User create(String username, Nivel nivel) {
         var user = User.builder().username(username).nivel(nivel).build();
-        return this.gateway.save(user);
+
+        var response = this.gateway.save(user);
+        return response;
     }
 
     @Override
@@ -45,10 +46,10 @@ public class UserServiceImpl implements UserService{
     public List<Task> getAllTaskByUserId(Long id) {
         return this.gateway.findTasksByUserId(id);
     }
-    
+
     @Override
     public User findByUsername(String username) {
         return this.gateway.findByUsername(username);
-        
+
     }
 }

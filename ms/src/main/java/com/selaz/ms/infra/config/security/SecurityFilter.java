@@ -36,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         var token = this.recoverToken(request);
         var login = tokenService.validateToken(token);
-
+        
         if (login != null) {
             UserJpaModel user = userRepository.findByUsername(login).orElseThrow(() -> new UserNotFoundException());
 
