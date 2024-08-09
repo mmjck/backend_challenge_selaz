@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface TaskJpaRepository extends JpaRepository<TaskJpaModel, Long> {
     @Query("SELECT t FROM Task t " +
-            "WHERE (:userId IS NULL OR t.user.id = :userId) " +
+            "WHERE (:userId IS NULL OR t.userId = :userId) " +
             "AND (:status IS NULL OR t.status = :status) " +
-            "AND :orderByDueDate IS TRUE ORDER BY t.dueDate")
+            "ORDER BY CASE WHEN :orderByDueDate = TRUE THEN t.dueDate END ASC")
     List<TaskJpaModel> findAllWithFilter(
             @Param("userId") Long userId,
             @Param("status") Status status,
